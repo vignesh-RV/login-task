@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { UtilService } from '../services/util.service';
 
 
 @Component({templateUrl: 'login.component.html'})
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
-        private router: Router) {}
+        private router: Router,
+        private util: UtilService) { }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -38,7 +40,12 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-
+        this.util.login(this.loginForm.getRawValue()).then((isPermitted: boolean) => {
+            if (isPermitted) {
+                this.router.navigate(['/home']);
+            } else this.util.alert(2, "Invalid Credentials");
+            this.loading = false;
+        });
         this.loading = true;
     }
 }

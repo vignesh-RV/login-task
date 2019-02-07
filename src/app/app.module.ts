@@ -9,6 +9,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { RouteGuard } from './route-guards/route-guards';
+import { UtilService } from './services/util.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { RouteGuard } from './route-guards/route-guards';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [ RouteGuard ],
+  providers: [ RouteGuard, UtilService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
