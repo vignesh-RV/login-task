@@ -1,42 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { FormGroup} from '@angular/forms';
 import { UtilService } from '../services/util.service';
+import { FormService } from '../services/form.service';
 
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
+    loadingIcon: string;
     loginForm: FormGroup;
     loading = false;
     submitted = false;
-    returnUrl: string;
 
     constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private router: Router,
-        private util: UtilService) { }
+        private util: UtilService,
+        private formService: FormService) { }
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
-        });
-
-       
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.loadingIcon = this.util.loadingIcon;
+        this.loginForm = this.formService.getLoginForm();
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
+    get loginFormControls() { return this.loginForm.controls; }
 
     onSubmit() {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
         }

@@ -1,10 +1,35 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<p>You're logged in with Angular 6!!</p>
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
-<p><a [routerLink]="['/login']">Logout</a></p>
+<div id="home-user-data">
+    <h2>Hi {{currentUser.firstName + " " + currentUser.lastName}}! - Your Details
+        <span class="logout"><a class="text-primary" (click)="doLogout()">Logout</a></span>
+    </h2>
+    <div class="row data-container">
+        <div class="form-group col-12">
+            <label class="user-data-label" for="firstName">First Name</label>
+            <label class="user-data">{{currentUser.firstName}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="lastName">Last Name</label>
+            <label class="user-data">{{currentUser.lastName}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="username">Username</label>
+            <label class="user-data">{{currentUser.username}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="password">Password</label>
+            <label class="user-data">{{currentUser.password}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="phone">Phone</label>
+            <label class="user-data">{{currentUser.phonenumber}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="email">Email</label>
+            <label class="user-data">{{currentUser.email}}</label>
+        </div>
+        <div class="form-group  col-12">
+            <label class="user-data-label" for="address">Address</label>
+            <label class="user-data">{{currentUser.address}}</label>
+        </div>
+    </div>
+</div>

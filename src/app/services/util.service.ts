@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models';
+import { User } from '../models/user';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class UtilService {
-     
-    constructor() {
+    
+    loadingIcon: string = "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==";
+
+    constructor(private router: Router, private toastr: ToastrService) {
     }
 
     registerUser(newuser: User): any{
@@ -65,6 +69,12 @@ export class UtilService {
         return userData;
     }
 
+    doLogout(): any{
+        localStorage.removeItem("currentUser");
+        this.alert(1, "Logged out Successfully");
+        this.router.navigate(['/login']);
+    }
+
     encodeData(data:any): any{
         return data ? btoa( JSON.stringify( data ) ) : "";
     }
@@ -75,6 +85,19 @@ export class UtilService {
 
     alert(type: number, message: string): any{
         // 1 : success, 2: error, 3: warning
-        
+        switch (type) {
+            case 1: { //success
+                this.toastr.success(message);
+                break;
+            }
+            case 2: { //error
+                this.toastr.error(message);
+                break;
+            }
+            case 3: { //warning
+                this.toastr.warning(message);
+                break;
+            }
+        }
     }
 }

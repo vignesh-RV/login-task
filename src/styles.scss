@@ -1,18 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~ngx-toastr/toastr.css";
+
 
 body{
     background-color: #eee;
     font-family: 'Montserrat-Regular';
     color: #353535;
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
 
     #app-container{
         margin: 5% 35%;
         background-color: #fff;
         padding: 10px 20px;
         width: 30%;
+        box-shadow: -3px 2px 1px #dad6d6;
         .form-group{
             min-height: 40px;
             padding: 10px 0;
@@ -20,7 +23,7 @@ body{
         .form-control{
             width: 280px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 13px;
             width: 100%;
             height: calc(2.25rem + 2px);
             font-weight: 400;
@@ -29,9 +32,43 @@ body{
             border: 1px solid #ced4da;
             border-radius: .25rem;
         }
+
+        #home-user-data{
+            .logout{
+                float: right;
+                font-size: 12px;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+            .data-container{
+                background-color: #dcf2f5;
+                label.user-data-label {
+                    font-weight: 800;
+                    min-width: 125px;
+                    text-align: right;
+                }
+                label.user-data-label::after{
+                    content: ':';
+                }
+                label.user-data {
+                    margin-left: 20px;
+                }
+            }
+        }
     }
 
     .btn-primary{
         width: 150px;
+    }
+    .btn-primary:disabled{
+        cursor: not-allowed;
+    }
+    .required::after{
+        content: "*";
+        color: red;
+    }
+
+    #toast-container .toast{
+        opacity: 1 !important ;
     }
 }

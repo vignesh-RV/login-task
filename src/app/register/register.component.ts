@@ -1,38 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UtilService } from '../services/util.service';
 import { Router } from '@angular/router';
+import { FormService } from '../services/form.service';
 
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
+    loadingIcon: string;
     registerForm: FormGroup;
     loading = false;
     submitted = false;
 
     constructor(
-        private formBuilder: FormBuilder,
+        private formservice: FormService,
         private router: Router,
         private util: UtilService) { }
 
     ngOnInit() {
-        this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            confirmpassword: ['', [Validators.required, Validators.minLength(6)]],
-            phonenumber: ['', Validators.required],
-        });
+        this.loadingIcon = this.util.loadingIcon;
+        this.registerForm = this.formservice.getRegisterationForm();
     }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.registerForm.controls; }
+    get form() { return this.registerForm.controls; }
 
     registerUser() {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.registerForm.invalid) {
             return;
         }
@@ -40,7 +34,7 @@ export class RegisterComponent implements OnInit {
             if (isSaved) {
                 this.util.alert(1, "User Registered Successfully..");
                 this.router.navigate(['/login']);
-            }else this.util.alert(2, "Please try again");
+            }else this.util.alert(2, "Username already taken");
         });
         this.loading = true;
          

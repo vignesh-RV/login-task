@@ -14,4 +14,8 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
 
     }
+
+    doLogout(): any{
+        this.util.doLogout();
+    }
 }
